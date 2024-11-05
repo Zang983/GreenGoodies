@@ -34,7 +34,7 @@
                                 {% endif %}
                             </p>
                             <p>{{ product.price }} €</p>
-                            <a href="#">Voir le produit</a>
+                            <a href={{ path("detail_product",{id:product.id}) }}>Voir le produit</a>
                         </figcaption>
                     </figure>
                 {% endfor %}
