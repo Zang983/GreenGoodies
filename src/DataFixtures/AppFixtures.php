@@ -22,16 +22,22 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $users = UserFactory::createMany(30, function () {
-            return [
-                "password" => $this->passwordHasher->hashPassword(new User(), "password")
-            ];});
+
         $products = ProductFactory::createMany(30,function(){
             return [
               'picture' => random_int(1, 57) . '.jpg'
             ];
         });
-        $orders = OrderFactory::createMany(50);
+        $users = UserFactory::createMany(30, function () {
+            return [
+                "password" => $this->passwordHasher->hashPassword(new User(), "password")
+            ];});
+        $orders = OrderFactory::createMany(50, function () use ($users) {
+            return [
+                "user" => $users[array_rand($users,1)]
+            ];
+
+    });
         $ordersHasProducts = OrderHasProductFactory::createMany(150, function () use ($products, $orders) {
             return [
                 "product" => $products[array_rand($products)],

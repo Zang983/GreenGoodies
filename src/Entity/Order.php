@@ -29,11 +29,6 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $shippingAddress = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'orders')]
-    private Collection $User;
 
     /**
      * @var Collection<int, OrderHasProduct>
@@ -41,9 +36,12 @@ class Order
     #[ORM\OneToMany(targetEntity: OrderHasProduct::class, mappedBy: 'order_reference')]
     private Collection $products;
 
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
-        $this->User = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
@@ -101,30 +99,6 @@ class Order
     }
 
     /**
-     * @return Collection<int, User>
-     */
-    public function getUser(): Collection
-    {
-        return $this->User;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->User->contains($user)) {
-            $this->User->add($user);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        $this->User->removeElement($user);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, OrderHasProduct>
      */
     public function getProducts(): Collection
@@ -150,6 +124,18 @@ class Order
                 $product->setOrderReference(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
