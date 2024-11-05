@@ -32,7 +32,7 @@ final class OrderFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'amount' => self::faker()->randomFloat(),
+            'amount' => self::faker()->randomFloat(2),
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'shippingAddress' => self::faker()->text(255),
             'status' => self::faker()->numberBetween(1, 4),

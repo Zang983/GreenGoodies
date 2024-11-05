@@ -1,3 +1,151 @@
+/* General section */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: black;
+    font-family: 'inter', sans-serif;
+}
+
+:root {
+    --primary-bg-color: #FFFDF7;
+    --secondary-bg-color: #F7F1EC;
+    --primary-gray-color: #666666;
+    --secondary-gray-color: #333333;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 body {
-    background-color: skyblue;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--primary-bg-color);
+}
+
+header, footer {
+    height: 80px;
+    padding: 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header ul {
+    display: flex;
+    gap: 80px;
+}
+
+footer {
+    background: white;
+    padding-right: 90px;
+    justify-content: flex-end;
+}
+
+main {
+    flex: 1;
+}
+
+figure img {
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Homepage */
+
+#welcome-section, #conviction-section, #values-section {
+    display: flex;
+}
+
+#welcome-section img {
+    width: 50.76%;
+    max-height: 751px;
+    object-fit: contain;
+}
+
+#welcome-section div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    justify-content: center;
+    align-items: center;
+    background-color: #E8F0E3;
+}
+
+#welcome-section p {
+    max-width: 362px;
+}
+
+#welcome-section h1 {
+    margin-bottom: 28px;
+}
+
+#products-homepage h2 {
+    margin: 32px 0;
+}
+
+#products-homepage .products-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.product-card {
+    width: 100%;
+    height: 692px;
+}
+
+.product-card img {
+    height: 68.5%;
+}
+
+.product-card figcaption {
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    align-items: center;
+}
+
+#conviction-section, #values-section {
+    background-color: #EBE3D3;
+}
+
+#conviction-section div, #values-section div {
+    margin: 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: fit-content;
+    align-self: flex-end;
+
+}
+
+#conviction-section p, #values-section p {
+    width: 425px;
+}
+
+#conviction-section img, #values-section img {
+    width: 33.82%;
+    max-height: 646px;
+}
+
+#values-section {
+    background-color: #E8F0E3;
+}
+
+#values-section img {
+    order: 1;
+}
+
+#values-section div {
+    order: 2;
 }

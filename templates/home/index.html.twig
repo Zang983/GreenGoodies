@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EcoGarden{% endblock %}
+
+{% block body %}
+    <main>
+        <section id="welcome-section">
+            <div>
+                <h1>Bienvenue</h1>
+                <p>
+                    Découvrez notre univers de produits durables et éthiques pour une consommation responsable
+                </p>
+                <p>
+                    Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt
+                    à porter
+                </p>
+            </div>
+            <img src="{{ asset('images/home_banner.png') }}">
+        </section>
+
+        <section id="products-homepage">
+            <h2>NOS PRODUITS</h2>
+            <div class="products-list">
+                {% for product in products %}
+                    <figure class="product-card">
+                        <img src="{{ asset('/productImages/' ~ product.picture) }}" alt="{{ product.name }}">
+                        <figcaption>
+                            <h3>{{ product.name }}</h3>
+                            <p>
+                                {% if product.shortDescription > 30 %}
+                                    {{ product.shortDescription|slice(0,30) }}...
+                                {% else %}
+                                    {{ product.shortDescription }}
+                                {% endif %}
+                            </p>
+                            <p>{{ product.price }} €</p>
+                            <a href="#">Voir le produit</a>
+                        </figcaption>
+                    </figure>
+                {% endfor %}
+            </div>
+        </section>
+        <section id="conviction-section">
+            <div>
+                <h2>
+                    NOTRE CONVICTION
+                </h2>
+                <p>
+                    Chez GreenGoodies, nous croyons en un monde où le commerce peut être synonyme de bien-être pour la
+                    planète et ses habitants. Notre mission est de vous proposer une sélection rigoureuse de produits
+                    qui allient qualité, durabilité et éthique
+                </p>
+            </div>
+            <img src="{{ asset('images/conviction.png') }}">
+        </section>
+        <section id="values-section">
+            <div>
+                <h2>
+                    NOS VALEURS
+                </h2>
+                <p>
+                    Durabilité : Nous sélectionnons soigneusement des produits qui respectent l'environnement et
+                    favorisent la durabilité.
+                    Éthique : Nous nous engageons à travailler avec des partenaires et des fournisseurs qui partagent
+                    nos valeurs éthiques.
+                    Écologie : Nous encourageons des pratiques respectueuses de l'écosystème et privilégions les
+                    matériaux écologiques.
+                </p>
+            </div>
+            <img src="{{ asset('images/values.png') }}">
+        </section>
+
+    </main>
+{% endblock %}
