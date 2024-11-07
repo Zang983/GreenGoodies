@@ -13,8 +13,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class UserController extends AbstractController
 {
     #[Route('/signup', name: 'signup')]
-    public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
-    {
+    public function index(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        EntityManagerInterface $entityManager
+    ): Response {
         $form = $this->createForm(SignupType::class);
 
         $form->handleRequest($request);
@@ -40,19 +43,35 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/login', name: 'login')]
-    public function login(): Response
-    {
-        return $this->render('user/login.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }
 
     #[Route('/account', name: 'account')]
     public function account(): Response
     {
+        $orders = $this->getUser()->getOrders();
+
         return $this->render('user/account.html.twig', [
+            'orders' => $orders,
             'controller_name' => 'UserController',
         ]);
+    }
+
+    #[Route('/toggleApi', name: 'toggle_api')]
+    public function toggleApi(EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $user->setApiAccess(!$user->isApiAccess());
+        $entityManager->flush();
+
+        return $this->redirectToRoute('account');
+    }
+
+    #[Route('delete', name: 'delete_account')]
+    public function deleteAccount(EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_logout');
     }
 }

@@ -3,18 +3,41 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>F:/xampp/htdocs/Projets/P13/src/Controller/UserController.php</code></li>
-        <li>Your template at <code>F:/xampp/htdocs/Projets/P13/templates/user/index.html.twig</code></li>
-    </ul>
-</div>
+    <main>
+        <h1>Mon compte</h1>
+        <section id="orders-list">
+            <h2>Mes commandes</h2>
+            <ul>
+                <li>
+                    <span>N°</span>
+                    <span>Date</span>
+                    <span>Prix</span>
+                </li>
+                {% for order in orders %}
+                    <li>
+                        <span>{{ order.id }}</span>
+                        <span>{{ order.createdAt|date('d/m/Y') }}</span>
+                        <span>{{ order.amount }} €</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+        <div>
+            <h2>Mon accès API</h2>
+            <a href="{{ path('toggle_api') }}">
+                {% if  app.user.isApiAccess %}
+                    Désactiver
+                {% else %}
+                    Activer
+                {% endif %}
+                mon accès API
+            </a>
+        </div>
+        <div>
+            <h2>Mon accès API</h2>
+            <a href="{{ path('delete_account') }}">
+                Supprimer mon compte
+            </a>
+        </div>
+    </main>
 {% endblock %}

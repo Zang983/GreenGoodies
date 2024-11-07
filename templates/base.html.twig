@@ -19,16 +19,16 @@
     </a>
     <nav>
         <ul>
-
-            {#                <li><a href="{{ path('products') }}">Nos produits</a></li> #}
-            {#                <li><a href="{{ path('cart') }}">Mon panier</a></li> #}
-            {#                <li><a href="{{ path('account') }}">Mon compte</a></li> #}
-            {#                <li><a href="{{ path('logout') }}">Déconnexion</a></li> #}
-            <li><a href="{{ path('signup') }}">Inscription</a></li>
-            <li><a href="#">Nos produits</a></li>
-            <li><a href="#">Mon panier</a></li>
-            <li><a href="#">Mon compte</a></li>
-            <li><a href="#">Déconnexion</a></li>
+            {% if app.user%}
+                <li><a href="#">Nos produits</a></li>
+                <li><a href="#">Mon panier</a></li>
+                <li><a href="{{ path('account') }}">Mon compte</a></li>
+                <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+            {% else %}
+                <li><a href="#products-homepage">Nos produits</a></li>
+                <li><a href="{{ path('login') }}">Connexion</a></li>
+                <li><a href="{{ path('signup') }}">Inscription</a></li>
+            {% endif %}
 
         </ul>
     </nav>

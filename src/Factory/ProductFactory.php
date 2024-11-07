@@ -35,7 +35,7 @@ final class ProductFactory extends PersistentProxyObjectFactory
             'fullDescription' => self::faker()->text(),
             'name' => self::faker()->text(12),
             'picture' => self::faker()->text(255),
-            'price' => self::faker()->randomFloat(2),
+            'price' => self::faker()->randomFloat(2,0.10,9999.99),
             'shortDescription' => self::faker()->text(255),
         ];
     }
