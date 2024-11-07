@@ -5,14 +5,18 @@ namespace App\Controller;
 use App\Form\SignupType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 class UserController extends AbstractController
 {
     #[Route('/signup', name: 'signup')]
+
     public function index(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
@@ -45,6 +49,7 @@ class UserController extends AbstractController
 
 
     #[Route('/account', name: 'account')]
+    #[IsGranted('ROLE_USER')]
     public function account(): Response
     {
         $orders = $this->getUser()->getOrders();
@@ -56,6 +61,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/toggleApi', name: 'toggle_api')]
+    #[IsGranted('ROLE_USER')]
     public function toggleApi(EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -66,12 +72,14 @@ class UserController extends AbstractController
     }
 
     #[Route('delete', name: 'delete_account')]
-    public function deleteAccount(EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_USER')]
+    public function deleteAccount(EntityManagerInterface $entityManager, Security $security): Response
     {
         $user = $this->getUser();
+        $security->logout(false);
         $entityManager->remove($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_logout');
+        return $this->redirectToRoute('app_home');
     }
 }

@@ -21,6 +21,7 @@ class OrderHasProduct
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Order $order_reference = null;
 
     #[ORM\ManyToOne(inversedBy: 'order_reference')]
