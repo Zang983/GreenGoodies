@@ -3,7 +3,8 @@
 namespace App\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 
 class JWTCreatedListener
 {
@@ -14,7 +15,7 @@ class JWTCreatedListener
         $payload = $event->getData();
         $user = $event->getUser();
         if (!$user->isApiAccess()) {
-            throw new CustomUserMessageAuthenticationException('You need to activate your access on website !');
+            throw new AccessDeniedException('You need to activate your access on website !');
         }
         $payload['id'] = $user->getId();
         $payload['email'] = $user->getEmail();

@@ -43,7 +43,7 @@ class UserController extends AbstractController
 
         return $this->render('user/signup.html.twig', [
             'form' => $form->createView(),
-            'controller_name' => 'UserController',
+            'controller_name' => 'ProductController',
         ]);
     }
 
@@ -56,7 +56,7 @@ class UserController extends AbstractController
 
         return $this->render('user/account.html.twig', [
             'orders' => $orders,
-            'controller_name' => 'UserController',
+            'controller_name' => 'ProductController',
         ]);
     }
 
