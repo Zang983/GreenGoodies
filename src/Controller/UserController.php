@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Form\SignupType;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -17,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class UserController extends AbstractController
 {
     #[Route('/signup', name: 'signup')]
-    public function index(
+    public function signup(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager
@@ -35,16 +37,18 @@ class UserController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            $entityManager->persist($user);
-            $entityManager->flush();
+            try{
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('account');
+                return $this->redirectToRoute('account');
+            }catch(UniqueConstraintViolationException $e){
+                $form->get('email')->addError(new FormError('Adresse email déjà utilisée'));
+            }
         }
-
         if ($form->isSubmitted()) {
             $this->addFlash('error', 'Invalid data');
         }
-
         return $this->render('user/signup.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'ProductController',
