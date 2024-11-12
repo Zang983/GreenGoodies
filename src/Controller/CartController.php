@@ -65,8 +65,10 @@ class CartController extends AbstractController
     {
         $cart = CartService::getCart($this->requestStack->getSession());
         if (empty($cart)) {
+            $this->addFlash('warning', 'Your cart is empty.');
             return $this->redirectToRoute('cart');
         }
+
         $order = new Order();
         $order->setCreatedAt(new \DateTimeImmutable());
         $order->setStatus(0);
@@ -88,7 +90,10 @@ class CartController extends AbstractController
         $entityManager->flush();
         CartService::clearCart($this->requestStack->getSession());
 
-        return $this->redirectToRoute('cart');
+        $this->addFlash('success', 'Order successfully created.');
+        $this->addFlash("info", "Order ID: " . $order->getId());
+        return $this->redirectToRoute('account');
     }
+
 
 }

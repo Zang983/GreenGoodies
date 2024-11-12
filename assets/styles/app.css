@@ -359,7 +359,7 @@ figure img {
 
 #account-page h1 {
     margin-bottom: 18px;
-    font-size:20px;
+    font-size: 20px;
 }
 
 #account-page #orders-list, #account-page #account-links-container {
@@ -373,6 +373,7 @@ figure img {
 #orders-list {
     padding: 60px 60px 56px;
 }
+
 #account-links-container {
     display: flex;
     flex-direction: column;
@@ -501,4 +502,33 @@ table tr:nth-last-of-type(1) {
 
 #signup-page .cgu-checkbox label {
     order: 2;
+}
+
+.toast {
+
+    width: 200px;
+    height: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkseagreen;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: ease-in-out 3s appearIn;
+    overflow: hidden;
+}s
+
+@keyframes appearIn {
+    from {
+        opacity: 0;
+    }
+    35% {
+        opacity: 1;
+        height: 75px;
+    }
+    100% {
+        opacity: 0;
+    }
 }

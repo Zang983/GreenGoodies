@@ -3,6 +3,12 @@
 {% block title %}Mon compte !{% endblock %}
 
 {% block body %}
+    {% if flashMessages %}
+        <div class="toast">
+            Votre commande : {{ flashMessages[0] }}
+            <br> est préparée par nos soins.
+        </div>
+    {% endif %}
     <main id="account-page">
         <h1 class="gray-text medium">Mon compte</h1>
         <section id="orders-list">

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -50,13 +51,15 @@ class UserController extends AbstractController
 
     #[Route('/account', name: 'account')]
     #[IsGranted('ROLE_USER')]
-    public function account(): Response
+    public function account(SessionInterface $session): Response
     {
         $orders = $this->getUser()->getOrders();
+        $flashMessages = $session->getFlashBag()->get('info');
 
         return $this->render('user/account.html.twig', [
             'orders' => $orders,
             'controller_name' => 'ProductController',
+            'flashMessages'=>$flashMessages[0] ?? null
         ]);
     }
 
