@@ -17,15 +17,14 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class UserController extends AbstractController
 {
     #[Route('/signup', name: 'signup')]
-
     public function index(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
-        EntityManagerInterface $entityManager,
-
+        EntityManagerInterface $entityManager
     ): Response {
         $form = $this->createForm(SignupType::class);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $user->setRoles(['ROLE_USER']);
@@ -38,17 +37,20 @@ class UserController extends AbstractController
             );
             $entityManager->persist($user);
             $entityManager->flush();
+
             return $this->redirectToRoute('account');
         }
-        elseif($form->isSubmitted())
-        {
+
+        if ($form->isSubmitted()) {
             $this->addFlash('error', 'Invalid data');
         }
+
         return $this->render('user/signup.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'ProductController',
         ]);
     }
+
 
 
     #[Route('/account', name: 'account')]

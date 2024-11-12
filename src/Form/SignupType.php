@@ -29,17 +29,20 @@ class SignupType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmation mot de passe'],
+                'first_options' => [
+                    'label' => 'Mot de passe',
+                ],
+                'second_options' => [
+                    'label' => 'Confirmation mot de passe',
+                    'error_bubbling' => true],
                 'required' => true,
 
             ])
             ->add('CGU', CheckboxType::class, [
                 'label' => 'J\'accepte les CGU de GreenGoodies',
                 'required' => true,
-                'row_attr' => ['class' => 'cgu-checkbox'],
-                'mapped'=>false,
-                'constraints'=>new IsTrue(['message'=>'Vous devez accepter les CGU pour vous inscrire'])
+                'mapped' => false,
+                'constraints' => new IsTrue(['message' => 'Vous devez accepter les CGU pour vous inscrire'])
             ])
             ->add('button', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
