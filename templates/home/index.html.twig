@@ -26,14 +26,14 @@
                         <img src="{{ asset('/productImages/' ~ product.picture) }}" alt="{{ product.name }}">
                         <figcaption>
                             <h3>{{ product.name }}</h3>
-                            <p>
+                            <p class="short-description">
                                 {% if product.shortDescription > 30 %}
                                     {{ product.shortDescription|slice(0,30) }}...
                                 {% else %}
                                     {{ product.shortDescription }}
                                 {% endif %}
                             </p>
-                            <p>{{ product.price }} €</p>
+                            <p class="price">{{ product.price }} €</p>
                             <a href={{ path("detail_product",{id:product.id}) }}>Voir le produit</a>
                         </figcaption>
                     </figure>

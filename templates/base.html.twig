@@ -19,13 +19,17 @@
     </a>
     <nav>
         <ul>
-            {% if app.user%}
-                <li><a href="#">Nos produits</a></li>
+            {% if app.user %}
+                {% if controller_name == 'HomeController' %}
+                    <li><a href="#products-homepage">Nos produits</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_home') }}#products-homepage">Nos produits</a></li>
+                {% endif %}
                 <li><a href="{{ path('cart') }}">Mon panier</a></li>
                 <li><a href="{{ path('account') }}">Mon compte</a></li>
                 <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
             {% else %}
-                <li><a href="#products-homepage">Nos produits</a></li>
+
                 <li><a href="{{ path('login') }}">Connexion</a></li>
                 <li><a href="{{ path('signup') }}">Inscription</a></li>
             {% endif %}

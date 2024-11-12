@@ -3,14 +3,19 @@
 {% block title %}Rejoignez nous ! Green Goodies{% endblock %}
 
 {% block body %}
-    <main id="signup">
-        <img src="{{ asset('/images/conviction.png') }}">
-        {{ form_start(form,{
-            attr:{
-                class:'signup-form'
-            }}) }}
-        <h1>Inscription</h1>
-        <h2>Tous les champs sont obligatoires</h2>
-        {{ form_end(form) }}
+    <main id="signup-page">
+        <img src="{{ asset('/images/signup.png') }}">
+        <section>
+
+
+            <h1>Inscription</h1>
+            <h2>Tous les champs sont obligatoires</h2>
+            {{ form_start(form,{
+                attr:{
+                    class:'signup-form'
+                }}) }}
+            {{ form_end(form) }}
+            <a href="{{ path('login') }}">Déjà un compte ? Connectez-vous</a>
+        </section>
     </main>
 {% endblock %}

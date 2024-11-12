@@ -6,8 +6,8 @@ use App\Entity\Order;
 use App\Entity\Product;
 use CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,25 +23,26 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'cart')]
     public function index(): Response
     {
+//        CartService::clearCart($this->requestStack->getSession());
         return $this->render('cart/index.html.twig', [
             'cart' => CartService::getCart($this->requestStack->getSession()),
             'controller_name' => 'CartController',
+            'amount' => CartService::calcAmount($this->requestStack->getSession())
         ]);
     }
 
     #[Route('/cart/add/{id}', name: 'add_product')]
-    public function addProduct(Product $product, int $quantity = 1): RedirectResponse
+    public function addProduct(Product $product, Request $request): RedirectResponse
     {
+        $quantity = $request->get('quantity');
         $session = $this->requestStack->getSession();
-        if ($quantity < 1) {
-            $cart = CartService::removeProduct($product, $session);
-        }
-        else {
+        if ($quantity >= 0) {
             $cart = CartService::addProduct($product, $quantity, $session);
+            CartService::saveCart($cart, $session);
         }
-        CartService::saveCart($cart, $session);
         return $this->redirectToRoute('cart');
     }
+
     #[Route('/cart/remove/{id}', name: 'remove_product')]
     public function removeProduct(Product $product): RedirectResponse
     {
@@ -49,6 +50,7 @@ class CartController extends AbstractController
         CartService::saveCart($cart, $this->requestStack->getSession());
         return $this->redirectToRoute('cart');
     }
+
     #[Route('/cart/clear', name: 'clear_cart')]
     public function clearCart(): RedirectResponse
     {
@@ -71,7 +73,7 @@ class CartController extends AbstractController
         $amount = CartService::calcAmount($cart);
         $order->setAmount($amount);
         $order->setShippingAddress("Test address");
-        foreach($cart as $item) {
+        foreach ($cart as $item) {
             $orderHasProduct = new OrderHasProduct();
             $orderHasProduct->setProduct($item['product']);
             $orderHasProduct->setQuantity($item['quantity']);

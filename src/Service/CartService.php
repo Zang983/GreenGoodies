@@ -17,17 +17,13 @@ class CartService
 
     static public function addProduct(Product $product, int $quantity, SessionInterface $session): array
     {
-        $cart = self::getCart($session);
-        foreach ($cart as $key => $item) {
-            if ($item['product'] === $product->getId()) {
-                $cart[$key]['quantity'] += $quantity;
-                return $cart;
-            }
+        $cart = CartService::removeProduct($product, $session);
+        if ($quantity > 0) {
+            $cart[] = [
+                "product" => $product,
+                "quantity" => $quantity
+            ];
         }
-        $cart[] = [
-            "product" => $product->getId(),
-            "quantity" => 1
-        ];
         return $cart;
     }
 
@@ -35,7 +31,7 @@ class CartService
     {
         $cart = self::getCart($session);
         foreach ($cart as $key => $item) {
-            if ($item['product'] === $product->getId()) {
+            if ($item['product']->getId() === $product->getId()) {
                 unset($cart[$key]);
             }
         }
@@ -52,13 +48,25 @@ class CartService
         $session->remove('cart');
     }
 
-    static public function calcAmount($cart): float
+    static public function calcAmount($session): float
     {
+        $cart = self::getCart($session);
         $amount = 0;
         foreach ($cart as $item) {
             $amount += $item['product']->getPrice() * $item['quantity'];
         }
         return $amount;
+    }
+
+    static public function getProductQuantity($session, Product $product): int
+    {
+        $cart = self::getCart($session);
+        foreach ($cart as $item) {
+            if ($item['product'] === $product->getId()) {
+                return $item['quantity'];
+            }
+        }
+        return 0;
     }
 
 }

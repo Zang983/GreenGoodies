@@ -3,8 +3,31 @@
 {% block title %}Hello CartController!{% endblock %}
 
 {% block body %}
-<main>
-
-    {{ dump(cart) }}
-</main>
+    <main id="cart-page">
+        <h1>Mon panier</h1>
+        <section id="cart">
+            <a href="{{ path('clear_cart') }}">x Vider le panier</a>
+            <div id="products-list">
+                {% for product in cart %}
+                    <article>
+                        <figure>
+                            <img src='{{ asset('/productImages/'~ product.product.picture) }}'>
+                            <figcaption>
+                                <div>
+                                    <h1>{{ product.product.name }}</h1>
+                                    <h2>Quantité : {{ product.quantity }}</h2>
+                                    <h3>{{ product.product.price }}</h3>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </article>
+                {% endfor %}
+                <div id="cart-amount">
+                    <h2>Total panier : {{ amount }}€</h2>
+                    <h4>Frais de livraison : Offert</h4>
+                </div>
+            </div>
+            <a href="#" class="btn btn-primary btn-primary__smaller">Valider la commande</a>
+        </section>
+    </main>
 {% endblock %}

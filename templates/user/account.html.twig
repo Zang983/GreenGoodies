@@ -3,41 +3,49 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-    <main>
+    <main id="account-page">
         <h1>Mon compte</h1>
         <section id="orders-list">
             <h2>Mes commandes</h2>
-            <ul>
-                <li>
-                    <span>N°</span>
-                    <span>Date</span>
-                    <span>Prix</span>
-                </li>
+            <table>
+                <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Date</th>
+                    <th>Prix</th>
+                </tr>
+                </thead>
+                <tbody>
                 {% for order in orders %}
-                    <li>
-                        <span>{{ order.id }}</span>
-                        <span>{{ order.createdAt|date('d/m/Y') }}</span>
-                        <span>{{ order.amount }} €</span>
-                    </li>
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                        <td>{{ order.amount }} €</td>
+                    </tr>
                 {% endfor %}
-            </ul>
+
+                </tbody>
+
+            </table>
         </section>
-        <div>
-            <h2>Mon accès API</h2>
-            <a href="{{ path('toggle_api') }}">
-                {% if  app.user.isApiAccess %}
-                    Désactiver
-                {% else %}
-                    Activer
-                {% endif %}
-                mon accès API
-            </a>
-        </div>
-        <div>
-            <h2>Mon accès API</h2>
-            <a href="{{ path('delete_account') }}">
-                Supprimer mon compte
-            </a>
-        </div>
+        <section id="account-links-container">
+            <div>
+                <h2>Mon accès API</h2>
+                <a href="{{ path('toggle_api') }}" class="btn btn-primary">
+                    {% if  app.user.isApiAccess %}
+                        Désactiver
+                    {% else %}
+                        Activer
+                    {% endif %}
+                    mon accès API
+                </a>
+            </div>
+            <div>
+                <a href="{{ path('delete_account') }}" class="btn btn-primary">
+                    Supprimer mon compte
+                </a>
+            </div>
+        </section>
+
     </main>
 {% endblock %}
