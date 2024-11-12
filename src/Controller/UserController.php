@@ -21,10 +21,10 @@ class UserController extends AbstractController
     public function index(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+
     ): Response {
         $form = $this->createForm(SignupType::class);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
@@ -38,10 +38,12 @@ class UserController extends AbstractController
             );
             $entityManager->persist($user);
             $entityManager->flush();
-
             return $this->redirectToRoute('account');
         }
-
+        else
+        {
+            $this->addFlash('error', 'Invalid data');
+        }
         return $this->render('user/signup.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'ProductController',

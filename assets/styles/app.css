@@ -519,6 +519,9 @@ table tr:nth-last-of-type(1) {
     animation: ease-in-out 4s appearIn;
     overflow: hidden;
 }
+.toast-error{
+    background-color: #ff0000;
+}
 
 @keyframes appearIn {
     from {

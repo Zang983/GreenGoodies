@@ -4,6 +4,11 @@
 
 {% block body %}
     <main id="login-page">
+        {% if error %}
+            <div class="toast toast-error">
+                Identifiants incorrects
+            </div>
+        {% endif %}
         <img src="{{ asset('/images/conviction.png') }}" alt="">
         <section>
             {% if error %}
@@ -13,7 +18,8 @@
             <form method="post" class="gray-text__lighter">
                 <div>
                     <label for="username">Adresse email</label>
-                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control"
+                    <input type="email" value="{{ last_username }}" name="_username" id="username"
+                           class="form-control"
                            autocomplete="email" required autofocus>
                 </div>
                 <div>
@@ -30,7 +36,8 @@
                     Se connecter
                 </button>
             </form>
-            <a href="{{ path('signup') }}" class="underline gray-text__lighter">Pas encore de compte ? S'inscrire</a>
+            <a href="{{ path('signup') }}" class="underline gray-text__lighter">Pas encore de compte ?
+                S'inscrire</a>
         </section>
 
     </main>

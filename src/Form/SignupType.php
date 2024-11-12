@@ -36,7 +36,7 @@ class SignupType extends AbstractType
             ])
             ->add('CGU', CheckboxType::class, [
                 'label' => 'J\'accepte les CGU de GreenGoodies',
-                'required' => false,
+                'required' => true,
                 'row_attr' => ['class' => 'cgu-checkbox'],
                 'mapped'=>false,
                 'constraints'=>new IsTrue(['message'=>'Vous devez accepter les CGU pour vous inscrire'])
