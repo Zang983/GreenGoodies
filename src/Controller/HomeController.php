@@ -9,8 +9,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    ##TODO : Dans cette vue, finir le css des product-card figcaption et les polices de tout le site
-    ##TODO : Rajouter la case à cocher CGU dans le login et le lien vers la page de connexion
     #[Route('/', name: 'app_home')]
     public function index(ProductRepository $productRepository): Response
     {
