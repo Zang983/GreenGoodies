@@ -23,11 +23,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-        $products = ProductFactory::createMany(10,function(){
-            return [
-              'picture' => random_int(1, 10) . '.webp'
-            ];
-        });
+        $products = ProductFactory::createMany(9);
         $users = UserFactory::createMany(30, function () {
             return [
                 "password" => $this->passwordHasher->hashPassword(new User(), "password")
