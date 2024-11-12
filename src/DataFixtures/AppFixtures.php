@@ -23,9 +23,9 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-        $products = ProductFactory::createMany(30,function(){
+        $products = ProductFactory::createMany(10,function(){
             return [
-              'picture' => random_int(1, 57) . '.jpg'
+              'picture' => random_int(1, 10) . '.webp'
             ];
         });
         $users = UserFactory::createMany(30, function () {
