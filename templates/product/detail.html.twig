@@ -8,10 +8,10 @@
             <figure>
                 <img src='{{ asset('/productImages/'~ product.picture) }}'>
                 <figcaption>
-                    <div><h1>{{ product.name }}</h1>
-                        <h2>{{ product.price }}</h2>
-                        <h3>Description</h3>
-                        <p>{{ product.fullDescription }}</p>
+                    <div><h1 class="gray-text">{{ product.name }}</h1>
+                        <h2 class="gray-text light">{{ product.price|format_currency('EUR', locale: 'fr_FR') }}</h2>
+                        <h3 class="gray-text__lighter">Description</h3>
+                        <p class="gray-text__lighter">{{ product.fullDescription }}</p>
                     </div>
                     {% if app.user %}
                         <form action="{{ path('add_product',{"id":product.id}) }}" method="post">

@@ -18,7 +18,7 @@
         <img src="{{ asset('/images/Logo.png') }}"/>
     </a>
     <nav>
-        <ul>
+        <ul class="gray-text">
             {% if app.user %}
                 {% if controller_name == 'HomeController' %}
                     <li><a href="#products-homepage">Nos produits</a></li>
@@ -40,7 +40,7 @@
 {% block body %}
 {% endblock %}
 <footer>
-    <p>&copy; GreenGoodies - {{ 'now'|date('Y') }}</p>
+    <p class="gray-text">&copy; GreenGoodies - {{ 'now'|date('Y') }}</p>
 </footer>
 </body>
 </html>

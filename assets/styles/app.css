@@ -3,8 +3,8 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    color: black;
     font-family: 'inter', sans-serif;
+    font-size: 14px;
 }
 
 :root {
@@ -25,7 +25,7 @@ a {
 
 .btn-primary {
     display: flex;
-    background-color: var(--primary-gray-color);
+    background-color: #565656;
     color: white;
     outline: none;
     border: none;
@@ -79,6 +79,43 @@ figure img {
     width: 100%;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.semi-bold {
+    font-weight: 600;
+}
+
+.light {
+    font-weight: 300;
+}
+
+.regular {
+    font-weight: 400;
+}
+
+.medium {
+    font-weight: 500;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.gray-text {
+    color: var(--secondary-gray-color);
+}
+
+.gray-text__lighter {
+    color: var(--primary-gray-color);
+
+}
+
 /* Homepage */
 
 #welcome-section, #conviction-section, #values-section {
@@ -101,16 +138,20 @@ figure img {
     background-color: #E8F0E3;
 }
 
-#welcome-section p {
-    max-width: 362px;
-}
 
 #welcome-section h1 {
     margin-bottom: 28px;
+    font-size: 64px;
+}
+
+#welcome-section p {
+    max-width: 355px;
+    font-size: 18px;
 }
 
 #products-homepage h2 {
-    margin: 32px 0;
+    margin: 32px 100px;
+    font-size: 14px;
 }
 
 #products-homepage .products-list {
@@ -129,24 +170,32 @@ figure img {
 
 .product-card figcaption {
     display: flex;
-    height:31.5%;
+    height: 31.5%;
     flex-direction: column;
     padding-top: 40px;
     padding-bottom: 30px;
     align-items: center;
 }
+
 .product-card figcaption h3 {
-    margin-bottom:8px;
+    margin-bottom: 8px;
+    font-size: 16px;
 }
+
 .product-card figcaption .short-description {
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
-.product-card .price{
-    margin-bottom:50px;
+
+.product-card .price {
+    margin-bottom: 50px;
 }
 
 #conviction-section, #values-section {
     background-color: #EBE3D3;
+}
+
+#conviction-section h2, #values-section h2 {
+    font-size: 20px;
 }
 
 #conviction-section div, #values-section div {
@@ -157,7 +206,6 @@ figure img {
     gap: 10px;
     height: fit-content;
     align-self: flex-end;
-
 }
 
 #conviction-section p, #values-section p {
@@ -203,14 +251,18 @@ figure img {
 
 #product-details figcaption h1 {
     margin-bottom: 24px;
+    font-size: 20px;
 }
 
 #product-details figcaption h2 {
     margin-bottom: 50px;
+    font-size: 30px;
 }
+
 
 #product-details figcaption h3 {
     margin-bottom: 10px;
+    font-size: 10px;
 }
 
 #product-details figcaption p {
@@ -259,9 +311,22 @@ figure img {
     align-items: center;
 }
 
+
 #cart-page #products-list img {
     width: 142px;
     height: 132px;
+}
+
+#cart-page #products-list h1 {
+    margin-bottom: 6px;
+}
+
+#cart-page #products-list h2 {
+    margin-bottom: 13px;
+}
+
+#cart-page #products-list h3 {
+    font-size: 18px;
 }
 
 #cart-amount {
@@ -277,6 +342,10 @@ figure img {
     margin-bottom: 29px;
 }
 
+#cart-amount h2 span {
+    font-size: 20px;
+}
+
 /*Account page*/
 
 #account-page {
@@ -290,6 +359,7 @@ figure img {
 
 #account-page h1 {
     margin-bottom: 18px;
+    font-size:20px;
 }
 
 #account-page #orders-list, #account-page #account-links-container {
@@ -303,7 +373,6 @@ figure img {
 #orders-list {
     padding: 60px 60px 56px;
 }
-
 #account-links-container {
     display: flex;
     flex-direction: column;
@@ -369,6 +438,14 @@ table tr:nth-last-of-type(1) {
     gap: 15px;
 }
 
+#signup-page h1, #login-page h1 {
+    font-size: 20px;
+}
+
+#login-page h1 {
+    margin-bottom: 40px;
+}
+
 #signup-page img, #login-page img {
     width: 50.97%;
 }
@@ -389,6 +466,7 @@ table tr:nth-last-of-type(1) {
 
 #signup-page h2 {
     margin-bottom: 14px;
+    font-size: 12px;
 }
 
 #signup-page input, #login-page input {
@@ -397,6 +475,7 @@ table tr:nth-last-of-type(1) {
     width: 100%;
     outline: none;
     border: 1px solid #666666;
+    padding-left: 10px;
 }
 
 #signup-page form div, #login-page form div, #signup-page form, #login-page form {

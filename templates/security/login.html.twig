@@ -4,13 +4,13 @@
 
 {% block body %}
     <main id="login-page">
-        <img src="{{ asset('/images/conviction.png') }}">
+        <img src="{{ asset('/images/conviction.png') }}" alt="">
         <section>
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
-            <h1>Connexion</h1>
-            <form method="post">
+            <h1 class="gray-text">Connexion</h1>
+            <form method="post" class="gray-text__lighter">
                 <div>
                     <label for="username">Adresse email</label>
                     <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control"
@@ -30,7 +30,7 @@
                     Se connecter
                 </button>
             </form>
-            <a href={{ path('signup') }}>Pas encore de compte ? S'inscrire</a>
+            <a href="{{ path('signup') }}" class="underline gray-text__lighter">Pas encore de compte ? S'inscrire</a>
         </section>
 
     </main>

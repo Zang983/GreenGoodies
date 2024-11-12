@@ -1,26 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Mon compte !{% endblock %}
 
 {% block body %}
     <main id="account-page">
-        <h1>Mon compte</h1>
+        <h1 class="gray-text medium">Mon compte</h1>
         <section id="orders-list">
-            <h2>Mes commandes</h2>
+            <h2 class="semi-bold">Mes commandes</h2>
             <table>
                 <thead>
-                <tr>
-                    <th>N°</th>
-                    <th>Date</th>
-                    <th>Prix</th>
+                <tr class="gray-text__lighter">
+                    <th class="regular">N°</th>
+                    <th class="regular">Date</th>
+                    <th class="regular">Prix</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for order in orders %}
-                    <tr>
-                        <td>{{ order.id }}</td>
-                        <td>{{ order.createdAt|date('d/m/Y') }}</td>
-                        <td>{{ order.amount }} €</td>
+                    <tr class="gray-text">
+                        <td class="medium">{{ order.id }}</td>
+                        <td class="medium">{{ order.createdAt|date('d/m/Y') }}</td>
+                        <td class="medium">{{ order.amount|format_currency('EUR', locale: 'fr_FR') }}</td>
                     </tr>
                 {% endfor %}
 
@@ -30,7 +30,7 @@
         </section>
         <section id="account-links-container">
             <div>
-                <h2>Mon accès API</h2>
+                <h2 class="semi-bold">Mon accès API</h2>
                 <a href="{{ path('toggle_api') }}" class="btn btn-primary">
                     {% if  app.user.isApiAccess %}
                         Désactiver

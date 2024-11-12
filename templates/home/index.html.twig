@@ -4,13 +4,13 @@
 
 {% block body %}
     <main>
-        <section id="welcome-section">
+        <section id="welcome-section" class="gray-text">
             <div>
                 <h1>Bienvenue</h1>
-                <p>
+                <p class="light">
                     Découvrez notre univers de produits durables et éthiques pour une consommation responsable
                 </p>
-                <p>
+                <p class="light">
                     Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt
                     à porter
                 </p>
@@ -19,21 +19,21 @@
         </section>
 
         <section id="products-homepage">
-            <h2>NOS PRODUITS</h2>
+            <h2 class="uppercase">Nos produits</h2>
             <div class="products-list">
                 {% for product in products %}
                     <figure class="product-card">
                         <img src="{{ asset('/productImages/' ~ product.picture) }}" alt="{{ product.name }}">
                         <figcaption>
-                            <h3>{{ product.name }}</h3>
-                            <p class="short-description">
+                            <h3 class="semi-bold">{{ product.name }}</h3>
+                            <p class="short-description gray-text__lighter">
                                 {% if product.shortDescription > 30 %}
                                     {{ product.shortDescription|slice(0,30) }}...
                                 {% else %}
                                     {{ product.shortDescription }}
                                 {% endif %}
                             </p>
-                            <p class="price">{{ product.price }} €</p>
+                            <p class="price gray-text">{{ product.price|format_currency('EUR', locale: 'fr_FR') }}</p>
                             <a href={{ path("detail_product",{id:product.id}) }}>Voir le produit</a>
                         </figcaption>
                     </figure>
@@ -41,11 +41,11 @@
             </div>
         </section>
         <section id="conviction-section">
-            <div>
-                <h2>
-                    NOTRE CONVICTION
+            <div class="gray-text">
+                <h2 class="uppercase">
+                    Notre Conviction
                 </h2>
-                <p>
+                <p class="light">
                     Chez GreenGoodies, nous croyons en un monde où le commerce peut être synonyme de bien-être pour la
                     planète et ses habitants. Notre mission est de vous proposer une sélection rigoureuse de produits
                     qui allient qualité, durabilité et éthique
@@ -54,11 +54,11 @@
             <img src="{{ asset('images/conviction.png') }}">
         </section>
         <section id="values-section">
-            <div>
+            <div class="gray-text">
                 <h2>
-                    NOS VALEURS
+                    Nos Valeurs
                 </h2>
-                <p>
+                <p class="light">
                     Durabilité : Nous sélectionnons soigneusement des produits qui respectent l'environnement et
                     favorisent la durabilité.
                     Éthique : Nous nous engageons à travailler avec des partenaires et des fournisseurs qui partagent
