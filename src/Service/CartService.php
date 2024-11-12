@@ -1,7 +1,10 @@
 <?php
 
+use App\Entity\OrderHasProduct;
 use App\Entity\Product;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Entity\Order;
+use App\Entity\User;
 
 class CartService
 {
@@ -67,6 +70,31 @@ class CartService
             }
         }
         return 0;
+    }
+
+    /* This method creates a new order*/
+    static public function createOrder($session, User $user): Order
+    {
+        $order = new Order();
+        $order->setCreatedAt(new \DateTimeImmutable());
+        $order->setStatus(0);
+        $order->setUser($user);
+        $amount = CartService::calcAmount($session);
+        $order->setAmount($amount);
+        $order->setShippingAddress("Test address");
+
+        return $order;
+    }
+
+    /* This method creates an Order Has Product entity for the join table. */
+    static public function createOrderHasProduct(Product $product, Order $order, int $quantity)
+    {
+        $orderHasProduct = new OrderHasProduct();
+        $orderHasProduct->setProduct($product);
+        $orderHasProduct->setPrice($product->getPrice());
+        $orderHasProduct->setQuantity($quantity);
+        $orderHasProduct->setOrderReference($order);
+        return $orderHasProduct;
     }
 
 }

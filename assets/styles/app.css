@@ -516,9 +516,9 @@ table tr:nth-last-of-type(1) {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    animation: ease-in-out 3s appearIn;
+    animation: ease-in-out 4s appearIn;
     overflow: hidden;
-}s
+}
 
 @keyframes appearIn {
     from {

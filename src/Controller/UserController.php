@@ -54,7 +54,7 @@ class UserController extends AbstractController
     public function account(SessionInterface $session): Response
     {
         $orders = $this->getUser()->getOrders();
-        $flashMessages = $session->getFlashBag()->get('info');
+        $flashMessages = $session->getFlashBag()->get('orderId');
 
         return $this->render('user/account.html.twig', [
             'orders' => $orders,

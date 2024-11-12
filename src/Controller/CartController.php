@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\OrderHasProduct;
 use App\Entity\Product;
+use App\Entity\User;
 use CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,13 +20,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class CartController extends AbstractController
 {
     public function __construct(private RequestStack $requestStack)
-    {
-    }
+    {}
 
     #[Route('/cart', name: 'cart')]
     public function index(): Response
     {
-//        CartService::clearCart($this->requestStack->getSession());
         return $this->render('cart/index.html.twig', [
             'cart' => CartService::getCart($this->requestStack->getSession()),
             'controller_name' => 'CartController',
@@ -48,7 +47,7 @@ class CartController extends AbstractController
     #[Route('/cart/remove/{id}', name: 'remove_product')]
     public function removeProduct(Product $product): RedirectResponse
     {
-        $cart = CartService::removeProduct($product, $this->requestStack->getSession());
+        $cart = CartService::removeProduct($product, session: $this->requestStack->getSession());
         CartService::saveCart($cart, $this->requestStack->getSession());
         return $this->redirectToRoute('cart');
     }
@@ -68,30 +67,21 @@ class CartController extends AbstractController
             $this->addFlash('warning', 'Your cart is empty.');
             return $this->redirectToRoute('cart');
         }
-
-        $order = new Order();
-        $order->setCreatedAt(new \DateTimeImmutable());
-        $order->setStatus(0);
-        $order->setUser($this->getUser());
-        $amount = CartService::calcAmount($this->requestStack->getSession());
-        $order->setAmount($amount);
-        $order->setShippingAddress("Test address");
+        //If cart ins't empty, create an order
+        $order = CartService::createOrder($this->requestStack->getSession(), user: $this->getUser());
         $entityManager->persist($order);
         $entityManager->flush();
 
+        //When order is created add products to orderHasProduct
         foreach ($cart as $item) {
-            $orderHasProduct = new OrderHasProduct();
-            $orderHasProduct->setProduct($item['product']);
-            $orderHasProduct->setPrice($item['product']->getPrice());
-            $orderHasProduct->setQuantity($item['quantity']);
-            $orderHasProduct->setOrderReference($order);
+            $orderHasProduct = CartService::createOrderHasProduct($item["product"], $order, $item['quantity']);
             $entityManager->persist($orderHasProduct);
         }
         $entityManager->flush();
         CartService::clearCart($this->requestStack->getSession());
 
         $this->addFlash('success', 'Order successfully created.');
-        $this->addFlash("info", "Order ID: " . $order->getId());
+        $this->addFlash("orderId", $order->getId());
         return $this->redirectToRoute('account');
     }
 
