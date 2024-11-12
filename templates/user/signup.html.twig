@@ -5,11 +5,12 @@
 {% block body %}
     <main id="signup-page">
         {% if app.flashes('error') %}
+
             <div class="toast toast-error">
                 Formulaire incorrect
             </div>
         {% endif %}
-        <img src="{{ asset('/images/signup.png') }}">
+        <img src="{{ asset('/images/signup.png') }}" alt="">
         <section>
             <h1>Inscription</h1>
             <h2 class="gray-text__lighter">Tous les champs sont obligatoires</h2>

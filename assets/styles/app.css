@@ -314,15 +314,15 @@ figure img {
     height: 132px;
 }
 
-#cart-page #products-list h1 {
+#cart-page #products-list h2 {
     margin-bottom: 6px;
 }
 
-#cart-page #products-list h2 {
+#cart-page #products-list h3 {
     margin-bottom: 13px;
 }
 
-#cart-page #products-list h3 {
+#cart-page #products-list h4 {
     font-size: 18px;
 }
 

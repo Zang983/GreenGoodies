@@ -11,19 +11,20 @@
                 {% for product in cart %}
                     <article>
                         <figure>
-                            <img src='{{ asset('/productImages/'~ product.product.picture) }}'>
+                            <img src='{{ asset('/productImages/'~ product.product.picture) }}' alt="Image du produit {{ product.product.name }}">
                             <figcaption>
                                 <div>
-                                    <h1 class="semi-bold">{{ product.product.name }}</h1>
-                                    <h2 class="gray-text__lighter regular">Quantité : {{ product.quantity }}</h2>
-                                    <h3 class="gray-text medium">{{ product.product.price|format_currency('EUR', locale: 'fr_FR') }}</h3>
+                                    <h2 class="semi-bold">{{ product.product.name }}</h2>
+                                    <h3 class="gray-text__lighter regular">Quantité : {{ product.quantity }}</h3>
+                                    <h4 class="gray-text medium">{{ product.product.price|format_currency('EUR', locale: 'fr_FR') }}</h4>
                                 </div>
                             </figcaption>
                         </figure>
                     </article>
                 {% endfor %}
                 <div id="cart-amount">
-                    <h2 class="gray-text medium">Total panier : <span>{{ amount|format_currency('EUR', locale: 'fr_FR') }}</span></h2>
+                    <h2 class="gray-text medium">Total panier :
+                        <span>{{ amount|format_currency('EUR', locale: 'fr_FR') }}</span></h2>
                     <h4 class="gray-text__lighter regular">Frais de livraison : Offert</h4>
                 </div>
             </div>

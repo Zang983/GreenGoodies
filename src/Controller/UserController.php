@@ -40,7 +40,7 @@ class UserController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('account');
         }
-        else
+        elseif($form->isSubmitted())
         {
             $this->addFlash('error', 'Invalid data');
         }
