@@ -24,7 +24,7 @@ class OrderHasProduct
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Order $order_reference = null;
 
-    #[ORM\ManyToOne(inversedBy: 'order_reference')]
+    #[ORM\ManyToOne(inversedBy: 'order_reference',cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 

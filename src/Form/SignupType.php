@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class SignupType extends AbstractType
 {
@@ -35,8 +36,10 @@ class SignupType extends AbstractType
             ])
             ->add('CGU', CheckboxType::class, [
                 'label' => 'J\'accepte les CGU de GreenGoodies',
-                'required' => true,
-                'row_attr'=> ['class' => 'cgu-checkbox']
+                'required' => false,
+                'row_attr' => ['class' => 'cgu-checkbox'],
+                'mapped'=>false,
+                'constraints'=>new IsTrue(['message'=>'Vous devez accepter les CGU pour vous inscrire'])
             ])
             ->add('button', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],

@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderHasProduct;
 use App\Entity\Product;
 use CartService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,27 +61,32 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart/checkout', name: 'checkout')]
-    public function checkout(): RedirectResponse
+    public function checkout(EntityManagerInterface $entityManager): RedirectResponse
     {
         $cart = CartService::getCart($this->requestStack->getSession());
         if (empty($cart)) {
             return $this->redirectToRoute('cart');
         }
-        $entityManager = $this->getDoctrine()->getManager();
         $order = new Order();
         $order->setCreatedAt(new \DateTimeImmutable());
         $order->setStatus(0);
         $order->setUser($this->getUser());
-        $amount = CartService::calcAmount($cart);
+        $amount = CartService::calcAmount($this->requestStack->getSession());
         $order->setAmount($amount);
         $order->setShippingAddress("Test address");
+        $entityManager->persist($order);
+        $entityManager->flush();
+
         foreach ($cart as $item) {
             $orderHasProduct = new OrderHasProduct();
             $orderHasProduct->setProduct($item['product']);
+            $orderHasProduct->setPrice($item['product']->getPrice());
             $orderHasProduct->setQuantity($item['quantity']);
-            $orderHasProduct->setOrder($order);
+            $orderHasProduct->setOrderReference($order);
             $entityManager->persist($orderHasProduct);
         }
+        $entityManager->flush();
+        CartService::clearCart($this->requestStack->getSession());
 
         return $this->redirectToRoute('cart');
     }
