@@ -20,12 +20,11 @@ class OrderHasProduct
     private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(nullable: false,onDelete: 'CASCADE', referencedColumnName: 'id')]
     private ?Order $order_reference = null;
 
-    #[ORM\ManyToOne(inversedBy: 'order_reference',cascade: ['persist'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'order_reference', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'id',)]
     private ?Product $product = null;
 
     public function getId(): ?int

@@ -34,8 +34,12 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart/add/{id}', name: 'add_product', methods: ['POST'])]
-    public function addProduct(Product $product, Request $request): RedirectResponse
+    public function addProduct(Request $request, Product $product = null): RedirectResponse
     {
+        if (!$product) {
+            $this->addFlash('error', 'Product not found.');
+            return $this->redirectToRoute('cart');
+        }
         $quantity = $request->get('quantity');
         $session = $this->requestStack->getSession();
         if ($quantity >= 0) {
@@ -46,8 +50,12 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart/remove/{id}', name: 'remove_product', methods: ['GET'])]
-    public function removeProduct(Product $product): RedirectResponse
+    public function removeProduct(Product $product = null): RedirectResponse
     {
+        if (!$product) {
+            $this->addFlash('error', 'Product not found.');
+            return $this->redirectToRoute('cart');
+        }
         $cart = CartService::removeProduct($product, session: $this->requestStack->getSession());
         CartService::saveCart($cart, $this->requestStack->getSession());
         return $this->redirectToRoute('cart');
