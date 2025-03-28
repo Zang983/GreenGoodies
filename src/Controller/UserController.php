@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\SignupType;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
-    #[Route('/signup', name: 'signup')]
+    #[Route('/signup', name: 'signup', methods: ['POST', 'GET'])]
     public function signup(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
@@ -57,11 +58,13 @@ class UserController extends AbstractController
 
 
 
-    #[Route('/account', name: 'account')]
+    #[Route('/account', name: 'account', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function account(SessionInterface $session): Response
     {
-        $orders = $this->getUser()->getOrders();
+        /** @var User $user */
+        $user = $this->getUser();
+        $orders = $user->getOrders();
         $flashMessages = $session->getFlashBag()->get('orderId');
 
         return $this->render('user/account.html.twig', [
@@ -71,18 +74,22 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/toggleApi', name: 'toggle_api')]
+    #[Route('/toggleApi', name: 'toggle_api', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function toggleApi(EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+        if ($user === null) {
+            throw $this->createAccessDeniedException('You must be logged in to access this page.');
+        }
+        /** @var User $user */
         $user->setApiAccess(!$user->isApiAccess());
         $entityManager->flush();
 
         return $this->redirectToRoute('account');
     }
 
-    #[Route('delete', name: 'delete_account')]
+    #[Route('delete', name: 'delete_account', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function deleteAccount(EntityManagerInterface $entityManager, Security $security): Response
     {

@@ -24,6 +24,8 @@ class SecurityController extends AbstractController
         ]);
     }
 
+//    #[Route(path: '/api/login', name: 'api_login')]
+
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {

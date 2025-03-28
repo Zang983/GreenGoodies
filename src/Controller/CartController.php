@@ -19,10 +19,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class CartController extends AbstractController
 {
-    public function __construct(private RequestStack $requestStack)
-    {}
+    public function __construct(private readonly RequestStack $requestStack)
+    {
+    }
 
-    #[Route('/cart', name: 'cart')]
+    #[Route('/cart', name: 'cart', methods: ['GET'])]
     public function index(): Response
     {
         return $this->render('cart/index.html.twig', [
@@ -32,7 +33,7 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/cart/add/{id}', name: 'add_product')]
+    #[Route('/cart/add/{id}', name: 'add_product', methods: ['POST'])]
     public function addProduct(Product $product, Request $request): RedirectResponse
     {
         $quantity = $request->get('quantity');
@@ -44,7 +45,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart');
     }
 
-    #[Route('/cart/remove/{id}', name: 'remove_product')]
+    #[Route('/cart/remove/{id}', name: 'remove_product', methods: ['GET'])]
     public function removeProduct(Product $product): RedirectResponse
     {
         $cart = CartService::removeProduct($product, session: $this->requestStack->getSession());
@@ -52,14 +53,14 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart');
     }
 
-    #[Route('/cart/clear', name: 'clear_cart')]
+    #[Route('/cart/clear', name: 'clear_cart', methods: ['GET'])]
     public function clearCart(): RedirectResponse
     {
         CartService::clearCart($this->requestStack->getSession());
         return $this->redirectToRoute('cart');
     }
 
-    #[Route('/cart/checkout', name: 'checkout')]
+    #[Route('/cart/checkout', name: 'checkout', methods: ['GET'])]
     public function checkout(EntityManagerInterface $entityManager): RedirectResponse
     {
         $cart = CartService::getCart($this->requestStack->getSession());
@@ -67,8 +68,10 @@ class CartController extends AbstractController
             $this->addFlash('warning', 'Your cart is empty.');
             return $this->redirectToRoute('cart');
         }
-        //If cart ins't empty, create an order
-        $order = CartService::createOrder($this->requestStack->getSession(), user: $this->getUser());
+        //If cart isn't empty, create an order
+        $user = $this->getUser();
+        /** @var User $user */
+        $order = CartService::createOrder($this->requestStack->getSession(), $user);
         $entityManager->persist($order);
         $entityManager->flush();
 
@@ -84,6 +87,4 @@ class CartController extends AbstractController
         $this->addFlash("orderId", $order->getId());
         return $this->redirectToRoute('account');
     }
-
-
 }

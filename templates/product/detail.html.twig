@@ -17,7 +17,11 @@
                         <form action="{{ path('add_product',{"id":product.id}) }}" method="post">
                             <input type="hidden" name="product_id" value="{{ product.id }}">
                             <input type="number" name="quantity" value="{{ quantity > 0 ? quantity : 1 }}" min="0">
+                            {% if quantity == 0 %}
                             <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-primary">Mettre à jour le panier</button>
+                            {% endif %}
                         </form>
                     {% else %}
                         <a href="{{ path('login') }}" class="btn btn-primary">Se connecter</a>

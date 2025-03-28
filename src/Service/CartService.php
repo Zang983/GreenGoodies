@@ -65,7 +65,7 @@ class CartService
     {
         $cart = self::getCart($session);
         foreach ($cart as $item) {
-            if ($item['product'] === $product->getId()) {
+            if ($item['product']->getId() === $product->getId()) {
                 return $item['quantity'];
             }
         }

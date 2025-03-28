@@ -11,13 +11,15 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProductController extends AbstractController
 {
-    public function __construct(private RequestStack $requestStack)
+    public function __construct(private readonly RequestStack $requestStack)
     {
     }
-    #[Route('/product/{id}', name: 'detail_product')]
-    public function index(Product $product): Response
+    #[Route('/product/{id}', name: 'detail_product', methods: ['GET'])]
+    public function index(Product $product = null): Response
     {
-        $cart = CartService::getCart($this->requestStack->getSession());
+        if ($product === null) {
+            return $this->redirectToRoute('home');
+        }
         return $this->render('product/detail.html.twig', [
             'controller_name' => 'ProductController',
             'product' => $product,
