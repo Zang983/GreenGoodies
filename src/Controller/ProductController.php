@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use CartService;
+use App\Service\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,6 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('home');
         }
         return $this->render('product/detail.html.twig', [
-            'controller_name' => 'ProductController',
             'product' => $product,
             'quantity'=> CartService::getProductQuantity($this->requestStack->getSession(),$product),
         ]);

@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
-use App\Entity\OrderHasProduct;
 use App\Entity\Product;
 use App\Entity\User;
-use CartService;
+use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;

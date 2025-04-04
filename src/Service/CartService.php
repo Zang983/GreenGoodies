@@ -1,12 +1,14 @@
 <?php
 
+namespace App\Service;
+
 use App\Entity\OrderHasProduct;
 use App\Entity\Product;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\Order;
 use App\Entity\User;
 
-class CartService
+final class CartService
 {
 
     static public function getCart(SessionInterface $session): array
@@ -87,7 +89,7 @@ class CartService
     }
 
     /* This method creates an Order Has Product entity for the join table. */
-    static public function createOrderHasProduct(Product $product, Order $order, int $quantity)
+    static public function createOrderHasProduct(Product $product, Order $order, int $quantity) : OrderHasProduct
     {
         $orderHasProduct = new OrderHasProduct();
         $orderHasProduct->setProduct($product);

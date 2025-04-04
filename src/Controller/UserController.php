@@ -52,7 +52,6 @@ class UserController extends AbstractController
         }
         return $this->render('user/signup.html.twig', [
             'form' => $form->createView(),
-            'controller_name' => 'ProductController',
         ]);
     }
 
